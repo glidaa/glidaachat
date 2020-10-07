@@ -11,6 +11,9 @@ class ExpressConfig{
 
 		//Files 
 		app.use(require('express').static(require('path').join('public')));
+
+		// UI
+		app.use(require('express').static(require('path').join('../../client/build')));
 	}
 }
 module.exports = ExpressConfig;
