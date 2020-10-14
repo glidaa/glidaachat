@@ -52,7 +52,7 @@ function Users(props) {
 
         setUsers([{
             ...data,
-            id: Math.floor(Math.random() * 1000000)
+            userid: Math.floor(Math.random() * 1000000)
         }, ..._users])
         handleClose()
     }
