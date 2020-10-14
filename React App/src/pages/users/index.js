@@ -27,7 +27,7 @@ function Users(props) {
         if (userid) {
             setUserId(userid);
 
-            const user = (users.find(user => user.id == userid))
+            const user = (users.find(user => user.userid == userid))
             setTimeout((user) => {
                 addUser(user)
             }, 200, user);
@@ -59,7 +59,7 @@ function Users(props) {
 
     const handleUserNavigate = (user) => {
         props.history.push({
-            pathname: `/users/${user.id}`,
+            pathname: `/users/${user.userid}`,
             user: user
         })
     }
@@ -105,7 +105,7 @@ function Users(props) {
                                     {users && users.map(user => <tr
                                         key={user.id}
                                         className="cursor-pointer">
-                                        <td><a className="btn btn-info stretched-link" onClick={() => handleUserNavigate(user)}>{user.id}</a></td>
+                                        <td><a className="btn btn-info stretched-link" onClick={() => handleUserNavigate(user)}>{user.userid}</a></td>
                                         <td>{user.username}</td>
                                         <td>{user.email}</td>
                                         <td>{user.phone}</td>

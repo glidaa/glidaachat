@@ -43,7 +43,7 @@ function LogUser(props) {
                             <Table variant="dark" striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th>#Id</th>
+                                        <th>#UserId</th>
                                         <th>Datetime</th>
                                         <th>Username</th>
                                     </tr>
@@ -51,7 +51,7 @@ function LogUser(props) {
                                 <tbody>
                                     {users && users.map(user => <tr
                                         className="cursor-pointer">
-                                        <td><a href={`/users/${user._id}`}>{user._id}</a></td>
+                                        <td><a >{user.userid}</a></td>
                                         <td>{moment(ObjectIdToTimeStamp(user._id)).format('DD/MM/YYYY - hh:mm:ss a')}</td>
                                         <td>{user.username}</td>
                                     </tr>
