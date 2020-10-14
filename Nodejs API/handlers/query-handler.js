@@ -4,19 +4,19 @@
 */
 
 'use strict';
-class QueryHandler{
+class QueryHandler {
 
-	constructor(){
+	constructor() {
 		this.Mongodb = require("./../config/db");
 	}
 
-	userNameCheck(data){
-		return new Promise( async (resolve, reject) => {
+	userNameCheck(data) {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
-				DB.collection('users').find(data).count( (error, result) => {
+				DB.collection('users').find(data).count((error, result) => {
 					DB.close();
-					if( error ){
+					if (error) {
 						reject(error);
 					}
 					resolve(result);
@@ -27,105 +27,139 @@ class QueryHandler{
 		});
 	}
 
-	getUserByUsername(username){
-		return new Promise( async (resolve, reject) => {
+	getUserByUsername(username) {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
 				DB.collection('users').find({
-					username :  username
-				}).toArray( (error, result) => {
+					username: username
+				}).sort().toArray((error, result) => {
 					DB.close();
-					if( error ){
+					if (error) {
 						reject(error);
 					}
 					resolve(result[0]);
 				});
 			} catch (error) {
 				reject(error)
-			}	
+			}
 		});
 	}
 
-	makeUserOnline(userId){
-		return new Promise( async (resolve, reject) => {
+	makeUserOnline(userId) {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
 				DB.collection('users').findAndModify({
-					_id : ObjectID(userId)
-				},[],{ "$set": {'online': 'Y'} },{new: true, upsert: true}, (err, result) => {
+					_id: ObjectID(userId)
+				}, [], { "$set": { 'online': 'Y' } }, { new: true, upsert: true }, (err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
 						reject(err);
 					}
 					resolve(result.value);
 				});
 			} catch (error) {
 				reject(error)
-			}	
+			}
 		});
 	}
 
-	registerUser(data){
-		return new Promise( async (resolve, reject) => {
+	addUser(data) {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
-				DB.collection('users').insertOne(data, (err, result) =>{
+				DB.collection('users').insertOne(data, (err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
+						reject(err);
+					}
+					resolve(result);
+				})
+			} catch (error) {
+				reject(error)
+			}
+		})
+	}
+
+	logUsers() {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const [DB, ObjectID] = await this.Mongodb.onConnect();
+				DB.collection('users').find().sort({ '_id': -1 }).toArray((err, result) => {
+					DB.close();
+					if (err) {
+						reject(err);
+					}
+					resolve(result);
+				})
+			} catch (error) {
+				reject(error)
+			}
+		})
+	}
+
+	registerUser(data) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const [DB, ObjectID] = await this.Mongodb.onConnect();
+				DB.collection('users').insertOne(data, (err, result) => {
+					DB.close();
+					if (err) {
 						reject(err);
 					}
 					resolve(result);
 				});
 			} catch (error) {
 				reject(error)
-			}	
+			}
 		});
 	}
 
-	userSessionCheck(data){
-		return new Promise( async (resolve, reject) => {
+	userSessionCheck(data) {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
-				DB.collection('users').findOne( { _id : ObjectID(data.userId) , online : 'Y'}, (err, result) => {
+				DB.collection('users').findOne({ _id: ObjectID(data.userId), online: 'Y' }, (err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
 						reject(err);
 					}
 					resolve(result);
-				});	
+				});
 			} catch (error) {
 				reject(error)
 			}
 		});
 	}
 
-	getUserInfo({userId,socketId = false}){
+	getUserInfo({ userId, socketId = false }) {
 		let queryProjection = null;
-		if(socketId){
+		if (socketId) {
 			queryProjection = {
-				"socketId" : true
+				"socketId": true
 			}
 		} else {
 			queryProjection = {
-				"username" : true,
-				"online" : true,
+				"username": true,
+				"online": true,
 				'_id': false,
 				'id': '$_id'
 			}
 		}
-		return new Promise( async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
 				DB.collection('users').aggregate([{
-					$match:  {
-						_id : ObjectID(userId)
+					$match: {
+						_id: ObjectID(userId)
 					}
-				},{
-					$project : queryProjection
+				}, {
+					$project: queryProjection
 				}
-				]).toArray( (err, result) => {
+				]).toArray((err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
 						reject(err);
 					}
 					socketId ? resolve(result[0]['socketId']) : resolve(result);
@@ -136,22 +170,22 @@ class QueryHandler{
 		});
 	}
 
-	addSocketId({userId, socketId}){
+	addSocketId({ userId, socketId }) {
 		const data = {
-			id : userId,
-			value : {
-				$set :{
-					socketId : socketId,
-					online : 'Y'
+			id: userId,
+			value: {
+				$set: {
+					socketId: socketId,
+					online: 'Y'
 				}
 			}
 		};
-		return new Promise( async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
-				DB.collection('users').update( { _id : ObjectID(data.id)}, data.value ,(err, result) => {
+				DB.collection('users').update({ _id: ObjectID(data.id) }, data.value, (err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
 						reject(err);
 					}
 					resolve(result);
@@ -162,25 +196,25 @@ class QueryHandler{
 		});
 	}
 
-	getChatList(userId){
-		return new Promise( async (resolve, reject) => {
+	getChatList(userId) {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
 				DB.collection('users').aggregate([{
 					$match: {
-						'socketId': { $ne : userId}
+						'socketId': { $ne: userId }
 					}
-				},{
-					$project:{
-						"username" : true,
-						"online" : true,
+				}, {
+					$project: {
+						"username": true,
+						"online": true,
 						'_id': false,
 						'id': '$_id'
 					}
 				}
-				]).toArray( (err, result) => {
+				]).toArray((err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
 						reject(err);
 					}
 					resolve(result);
@@ -191,13 +225,13 @@ class QueryHandler{
 		});
 	}
 
-	insertMessages(messagePacket){
-		return new Promise( async (resolve, reject) => {
+	insertMessages(messagePacket) {
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
-				DB.collection('messages').insertOne(messagePacket, (err, result) =>{
+				DB.collection('messages').insertOne(messagePacket, (err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
 						reject(err);
 					}
 					resolve(result);
@@ -208,18 +242,19 @@ class QueryHandler{
 		});
 	}
 
-	getMessages({userId, toUserId}){
+	getMessages({ userId, toUserId }) {
 		const data = {
-				'$or' : [
-					{ '$and': [
+			'$or': [
+				{
+					'$and': [
 						{
 							'toUserId': userId
-						},{
+						}, {
 							'fromUserId': toUserId
 						}
 					]
-				},{
-					'$and': [ 
+				}, {
+					'$and': [
 						{
 							'toUserId': toUserId
 						}, {
@@ -228,13 +263,13 @@ class QueryHandler{
 					]
 				},
 			]
-		};	    
-		return new Promise( async (resolve, reject) => {
+		};
+		return new Promise(async (resolve, reject) => {
 			try {
 				const [DB, ObjectID] = await this.Mongodb.onConnect();
-				DB.collection('messages').find(data).sort({'timestamp':1}).toArray( (err, result) => {
+				DB.collection('messages').find(data).sort({ 'timestamp': 1 }).toArray((err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
 						reject(err);
 					}
 					resolve(result);
@@ -245,24 +280,24 @@ class QueryHandler{
 		});
 	}
 
-	logout(userID,isSocketId){
+	logout(userID, isSocketId) {
 		const data = {
-			$set :{
-				online : 'N'
+			$set: {
+				online: 'N'
 			}
 		};
-		return new Promise( async (resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try {
-				const [DB, ObjectID] = await this.Mongodb.onConnect();		
+				const [DB, ObjectID] = await this.Mongodb.onConnect();
 				let condition = {};
 				if (isSocketId) {
 					condition.socketId = userID;
-				}else{
+				} else {
 					condition._id = ObjectID(userID);
 				}
-				DB.collection('users').update( condition, data ,(err, result) => {
+				DB.collection('users').update(condition, data, (err, result) => {
 					DB.close();
-					if( err ){
+					if (err) {
 						reject(err);
 					}
 					resolve(result);

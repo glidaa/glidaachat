@@ -35,8 +35,8 @@ class Registration extends Component {
     }
   }
 
-  checkUsernameAvailability = async (event)  => {
-    if(event.target.value !== '' && event.target.value !== undefined) {
+  checkUsernameAvailability = async (event) => {
+    if (event.target.value !== '' && event.target.value !== undefined) {
       this.setState({
         username: event.target.value
       });
@@ -44,7 +44,7 @@ class Registration extends Component {
       try {
         const response = await ChatHttpServer.checkUsernameAvailability(this.state.username);
         this.props.loadingState(false);
-        if(response.error) {
+        if (response.error) {
           this.setState({
             usernameAvailable: false
           });
@@ -63,7 +63,7 @@ class Registration extends Component {
       this.setState({
         usernameAvailable: true
       });
-    }  
+    }
   }
 
   handleInputChange = (event) => {
@@ -78,24 +78,24 @@ class Registration extends Component {
         <Form.Group controlId="formUsername">
           <DebounceInput
             className="form-control"
-            placeholder = "Enter username"
+            placeholder="Enter username"
             minLength={2}
             debounceTimeout={300}
             onChange={this.checkUsernameAvailability} />
           <Alert className={{
-            'username-availability-warning' : true,
+            'username-availability-warning': true,
             'visibility-hidden': this.state.usernameAvailable
-          }}  variant="danger">
+          }} variant="danger">
             <strong>{this.state.username}</strong> is already taken, try another username.
           </Alert>
         </Form.Group>
 
         <Form.Group controlId="formPassword">
-          <Form.Control 
-            type = "password"
-            name = "password"
-            placeholder = "Password"
-            onChange = {
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={
               this.handleInputChange
             }
           />

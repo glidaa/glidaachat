@@ -16,14 +16,20 @@ import Home from './pages/home/Home';
 import NotFound from './pages/not-found/NotFound';
 
 import './App.css';
+import Users from './pages/users';
+import LogUser from './pages/logs';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <Switch>
+
           <Route path="/" exact component={Authentication} />
-          <Route path="/home/" component={Home} />
+          <Route exact path="/users/:userid" exact component={Users} />
+          <Route exact path="/home/" component={Home} />
+          <Route exact path="/users/" component={Users} />
+          <Route exact path="/logs/" component={LogUser} />
           <Route component={NotFound} />
         </Switch>
       </Router>

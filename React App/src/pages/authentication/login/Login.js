@@ -21,7 +21,7 @@ class Login extends Component {
     try {
       const response = await ChatHttpServer.login(this.state);
       this.props.loadingState(false);
-      if(response.error) {
+      if (response.error) {
         alert('Invalid login details')
       } else {
         ChatHttpServer.setLS('userid', response.userId);
@@ -43,24 +43,24 @@ class Login extends Component {
     return (
       <Form className="auth-form">
         <Form.Group controlId="loginUsername">
-          <Form.Control 
-            type = "text"
-            name = "username"
-            placeholder = "Enter username"
-            onChange = {
+          <Form.Control
+            type="text"
+            name="username"
+            placeholder="Enter username"
+            onChange={
               this.handleInputChange
             }
           />
         </Form.Group>
 
         <Form.Group controlId="loginPassword">
-          <Form.Control 
-          type = "password"
-          name = "password"
-          placeholder = "Password"
-          onChange = {
-            this.handleInputChange
-          }
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={
+              this.handleInputChange
+            }
           />
         </Form.Group>
         <Button variant="primary" type="submit" onClick={this.handleLogin}>

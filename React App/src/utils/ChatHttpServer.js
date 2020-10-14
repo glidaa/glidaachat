@@ -1,5 +1,5 @@
 import * as axios from 'axios';
- 
+
 class ChatHttpServer {
 
     getUserId() {
@@ -58,7 +58,30 @@ class ChatHttpServer {
             }
         });
     }
-    
+
+    logUsers() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const response = await axios.get('http://localhost:4000/logUser');
+                resolve(response.data);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    addUser(data) {
+        console.log({ data })
+        return new Promise(async (resolve, reject) => {
+            try {
+                const response = await axios.post('http://localhost:4000/addUser', data);
+                resolve(response.data);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
     register(userCredential) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -96,7 +119,7 @@ class ChatHttpServer {
             }
         });
     }
-    
+
 }
 
 export default new ChatHttpServer();
