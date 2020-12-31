@@ -2,15 +2,16 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 
-import ChatSocketServer from '../../utils/ChatSocketServer';
-import ChatHttpServer from '../../utils/ChatHttpServer';
-
+import ChatSocketServer from '../../utils/chatSocketServer';
+// import ChatHttpServer from '../../utils/ChatHttpServer';
+import ChatHttpServer from '../../utils/chatHttpServer';
+// ChatHttpServer
 import ChatList from './chat-list/ChatList';
 import Conversation from './conversation/Conversation';
 
 import './Home.css';
 
-class Home extends Component {
+class Home extends Component { 
   userId = null;
   state = {
     isOverlayVisible: true,

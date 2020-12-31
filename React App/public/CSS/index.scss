@@ -1,0 +1,224 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+  overflow-x: hidden;;
+}
+
+
+/*Header-First Section*/
+#header{
+    height: 100vh;
+    background-color: #FFE5D2;
+    background-attachment: fixed;
+    .navbar{
+       padding: 10px 0;
+        .container{
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+           
+            .navbar-logo{
+                font-size: 2.5rem;
+                color: #333;
+                font-weight: 900;
+                .E{
+                    color: #6E5395;
+                }
+                .full-stop{
+                    color:#6E5395;
+                    font-size: 3.5rem;
+                }
+            }
+            .navbar-items{
+                display: flex;
+                align-self: center;
+                margin-left: auto;
+                padding-top: 10px;
+                a{
+                    margin-right: 10px;
+                    color: #6E5395;
+                    font-size: 1rem;
+                    font-weight: 900;
+                }
+            }
+        } 
+    }
+    .centered-header{
+        .container{
+            max-width: 1200px;
+            margin: 0 auto;
+            h1{
+                text-align: center;
+                margin-top: 300px;
+                font-size: 3rem;
+            }
+        }
+    }
+}
+
+/*Second Section*/ 
+#studies{
+    height:100vh;
+    background-color: #333;
+    padding: 200px 0;
+    .container{
+            .centered-header{
+                align-self: center;
+                .header{
+                    font-size: 2rem;
+                    text-align: left;
+                    color: #fff;
+                    font-weight: 900;
+                    line-height: 3.5rem;
+                }
+            }       
+        
+    }
+    
+}
+
+
+/*Third Section*/
+
+#girl{
+    height: 100vh;
+   // background-color: #F9E6AF;
+   background-color: white;
+   padding: 300px 0;
+    .container{
+            .centered-header{
+                width: 50%;
+                align-self: center;
+                .header{
+                    font-size: 2rem;
+                    text-align: left;
+                    color: #333;
+                    font-weight: 900;
+                    line-height: 3.5rem;
+                }
+            }
+        
+    }
+}
+
+
+/*Fourth Section - CoWorkers*/ 
+#co-workers{
+    height: 100vh;
+    background-color: #C6C0DD;
+    padding: 300px 0;
+    .container{
+
+            .centered-header{
+                align-self: center;
+                .header{
+                    font-size: 2rem;
+                    text-align: left;
+                    color: #fff;
+                    font-weight: 900;
+                    line-height: 3.5rem;
+                }
+            }
+        
+    }
+}
+
+/*Last Section*/
+#workout{
+    height: 100vh;
+    background-color: #2C373F;
+    padding: 300px 0;
+    .container{
+    
+            .centered-header{
+                align-self: center;
+                .header{
+                    font-size: 2rem;
+                    text-align: left;
+                    color: #fff;
+                    font-weight: 900;
+                    line-height: 3.5rem;
+                }
+            }
+        
+    }
+}
+
+//Media Query
+@media screen and (max-width:850px){
+
+    #header{
+        .navbar{
+            .container{
+                display: block;
+               text-align: center;
+                .navbar-logo{
+                    text-align: center;
+                }
+                .navbar-items{
+                    display: flex;
+                    justify-content: center;
+                    padding-top: 20px;
+                }
+            }
+        }
+        .centered-header{
+            .container{
+                padding: 20px;
+                h1{
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width:414px){
+    #co-workers,#workout,#girl,#studies{
+        padding: 40px 0 200px 0;
+        height: auto;
+        .container{
+                .centered-header{
+                    .header{
+                        font-size: 1rem;
+                        font-weight: 900;
+                        line-height: 2rem;
+                        
+                    }
+                }
+            
+        }
+    }
+    
+    
+}
+
+@media screen and (max-width:375px){
+    #co-workers,#workout,#girl,#studies{
+        padding: 300px 0;
+        height: 100%;
+        .container{
+                .centered-header{
+                    .header{
+                        font-size: 1rem;
+                        font-weight: 900;
+                        line-height: 2rem;
+                        
+                    }
+                }
+            
+        }
+    }
+    
+    
+}
