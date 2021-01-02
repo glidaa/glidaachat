@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import ChatHttpServer from '../../../utils/chatHttpServer';
-import ChatSocketServer from '../../../utils/chatSocketServer';
+import ChatHttpServer from '../../../utils/ChatHttpServer';
+import ChatSocketServer from '../../../utils/ChatSocketServer';
 
 import './Conversation.css';
 

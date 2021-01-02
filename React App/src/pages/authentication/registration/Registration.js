@@ -3,7 +3,7 @@ import { Alert, Form, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
 
-import ChatHttpServer from '../../../utils/chatHttpServer';
+import ChatHttpServer from '../../../utils/ChatHttpServer';
 import './Registration.css';
 
 class Registration extends Component {

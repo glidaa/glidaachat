@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 
-import ChatHttpServer from '../../../utils/chatHttpServer';
+import ChatHttpServer from '../../../utils/ChatHttpServer';
 import './Login.css';
 
 class Login extends Component {
