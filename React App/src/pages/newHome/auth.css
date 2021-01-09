@@ -5,10 +5,9 @@
 }
 .container{
     position: fixed;
-    top: 50vh;
-    right: 5vw;
+    bottom: 0;
+    right: 0;
     width: 500px;
-    height: 500px;
     background: rgba(255, 255, 255, 0.9);
 }
 .authentication-screen {
@@ -30,4 +29,16 @@
 
 .auth-loading {
     left: 0;
+}
+
+@media (max-width: 690px) {
+    .container {
+        bottom: 0;
+        height: 280px;
+        max-width: 100%;
+    }
+
+    .authentication-screen {
+        padding-top: 10%;
+    }
 }
